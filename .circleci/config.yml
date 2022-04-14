@@ -25,6 +25,7 @@ jobs:
       - run:
           name: Linux Get dependencies
           command: |
+            sudo apt-get update
             sudo apt install -y cpanminus build-essential libncurses5-dev libreadline-dev libssl-dev perl libpcre3 libpcre3-dev libldap2-dev
 
       - run:
