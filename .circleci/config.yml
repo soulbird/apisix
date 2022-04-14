@@ -3,7 +3,7 @@
 version: 2.1
 
 orbs:
-  go: circleci/go@x.y
+  go: circleci/go@1.7.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
@@ -13,14 +13,11 @@ jobs:
     machine:
       image: ubuntu-2004:202101-01
     resource_class: arm.medium
-    matrix:
-      parameters:
-        test_dir: ["t/plugin", "t/admin", "t/cli", "t/config-center-yaml", "t/core"]
-
+        
     steps:
       - checkout
       - go/install:
-          version: 1.17
+          version: "1.17"
 
       - run:
           name: Linux launch common services
@@ -68,7 +65,7 @@ jobs:
       - run:
           name: Linux Script
           environment:
-              - TEST_FILE_SUB_DIR: ["t/plugin", "t/admin", "t/cli", "t/config-center-yaml", "t/core"]
+            - TEST_FILE_SUB_DIR: '"t/plugin", "t/admin", "t/cli", "t/config-center-yaml", "t/core"'
           command: |
             sudo -E ARCH=arm64 ./ci/linux_openresty_runner.sh script
 
@@ -77,5 +74,5 @@ workflows:
     jobs:
       - test:
         filters:
-            branches:
-              only: master
+          branches:
+            only: master
