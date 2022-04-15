@@ -56,7 +56,7 @@ jobs:
       - run:
           name: Linux Script
           environment:
-            - TEST_FILE_SUB_DIR: '"t/plugin", "t/core"'
+            - TEST_FILE_SUB_DIR: "t/plugin t/core"
           command: |
             sudo -E ARCH=arm64 ./ci/linux_openresty_common-arm64_runner.sh script
 
