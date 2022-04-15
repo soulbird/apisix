@@ -51,7 +51,6 @@ jobs:
       - run:
           name: Linux Install
           command: |
-            echo 'export PATH=$GOPATH/bin:$PATH' >> $BASH_ENV
             sudo ARCH=arm64 ./ci/linux_openresty_common-arm64_runner.sh do_install
 
       - run:

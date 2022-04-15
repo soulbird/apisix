@@ -43,11 +43,6 @@ do_install() {
     make utils
 
     mkdir -p build-cache
-    # install and start grpc_server_example
-    cd t/grpc_server_example
-
-    CGO_ENABLED=0 go build
-    cd ../../
 
     # install grpcurl
     install_grpcurl
