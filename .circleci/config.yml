@@ -29,14 +29,6 @@ jobs:
             sudo apt install -y cpanminus build-essential libncurses5-dev libreadline-dev libssl-dev perl libpcre3 libpcre3-dev libldap2-dev
 
       - run:
-          name: Build wasm code
-          command: |
-            export TINYGO_VER=0.20.0
-            wget https://github.com/tinygo-org/tinygo/releases/download/v${TINYGO_VER}/tinygo_${TINYGO_VER}_arm.deb 2>/dev/null
-            sudo dpkg -i tinygo_${TINYGO_VER}_arm.deb
-            cd t/wasm && find . -type f -name "*.go" | xargs -Ip tinygo build -o p.wasm -scheduler=none -target=wasi p
-
-      - run:
           name: Build xDS library
           command: |
             cd t/xds-library
@@ -64,7 +56,7 @@ jobs:
       - run:
           name: Linux Script
           environment:
-            - TEST_FILE_SUB_DIR: '"t/plugin", "t/admin", "t/cli", "t/config-center-yaml", "t/core"'
+            - TEST_FILE_SUB_DIR: '"t/plugin", "t/core"'
           command: |
             sudo -E ARCH=arm64 ./ci/linux_openresty_runner.sh script
 
