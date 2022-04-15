@@ -51,14 +51,15 @@ jobs:
       - run:
           name: Linux Install
           command: |
-            sudo ARCH=arm64 ./ci/linux_openresty_runner.sh do_install
+            echo 'export PATH=$GOPATH/bin:$PATH' >> $BASH_ENV
+            sudo ARCH=arm64 ./ci/linux_openresty_common-arm64_runner.sh do_install
 
       - run:
           name: Linux Script
           environment:
             - TEST_FILE_SUB_DIR: '"t/plugin", "t/core"'
           command: |
-            sudo -E ARCH=arm64 ./ci/linux_openresty_runner.sh script
+            sudo -E ARCH=arm64 ./ci/linux_openresty_common-arm64_runner.sh script
 
 workflows:
   test-apisx:
