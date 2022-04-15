@@ -32,8 +32,8 @@ jobs:
           name: Build wasm code
           command: |
             export TINYGO_VER=0.20.0
-            wget https://github.com/tinygo-org/tinygo/releases/download/v${TINYGO_VER}/tinygo_${TINYGO_VER}_arm64.deb 2>/dev/null
-            sudo dpkg -i tinygo_${TINYGO_VER}_arm64.deb
+            wget https://github.com/tinygo-org/tinygo/releases/download/v${TINYGO_VER}/tinygo_${TINYGO_VER}_arm.deb 2>/dev/null
+            sudo dpkg -i tinygo_${TINYGO_VER}_arm.deb
             cd t/wasm && find . -type f -name "*.go" | xargs -Ip tinygo build -o p.wasm -scheduler=none -target=wasi p
 
       - run:
