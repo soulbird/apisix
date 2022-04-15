@@ -17,6 +17,9 @@ jobs:
     steps:
       - checkout
 
+      - run: git submodule sync
+      - run: git submodule update --init
+
       - run:
           name: Linux launch common services
           command: |
