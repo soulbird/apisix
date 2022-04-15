@@ -27,6 +27,7 @@ services:
     environment:
       ETCD_UNSUPPORTED_ARCH: arm64
       ETCD_ADVERTISE_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
     ports:
       - "3379:2379"
       - "3380:2380"
@@ -39,6 +40,7 @@ services:
     environment:
       ETCD_UNSUPPORTED_ARCH: arm64
       ETCD_ADVERTISE_CLIENT_URLS: http://0.0.0.0:2379
+      ETCD_LISTEN_CLIENT_URLS: http://0.0.0.0:2379
     ports:
       - "2379:2379"
       - "2380:2380"
