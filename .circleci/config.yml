@@ -17,9 +17,6 @@ jobs:
     steps:
       - checkout
 
-      - go/install:
-          version: "1.17"
-
       - run:
           name: Linux launch common services
           command: |
