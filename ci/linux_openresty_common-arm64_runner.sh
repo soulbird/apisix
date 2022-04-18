@@ -34,6 +34,11 @@ do_install() {
 
     ./utils/linux-install-luarocks.sh
 
+    wget https://github.com/etcd-io/etcd/releases/download/v3.4.18/etcd-v3.4.18-linux-arm64.tar.gz
+    tar xf etcd-v3.4.18-linux-arm64.tar.gz
+    sudo cp etcd-v3.4.18-linux-arm64/etcdctl /usr/local/bin/
+    rm -rf etcd-v3.4.18-linux-arm64
+
     create_lua_deps
 
     # sudo apt-get install tree -y
