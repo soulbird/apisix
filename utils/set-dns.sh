@@ -47,9 +47,16 @@ cat /etc/resolv.conf
 
 mkdir -p build-cache
 
+COREDNS_ARCH="amd64"
+ARCH=${ARCH:-`(uname -m | tr '[:upper:]' '[:lower:]')`}
+
+if [[ $ARCH == "arm64" ]] || [[ $ARCH == "aarch64" ]]; then
+    COREDNS_ARCH="arm64"
+fi
+
 if [ ! -f "build-cache/coredns_1_8_1" ]; then
-    wget https://github.com/coredns/coredns/releases/download/v1.8.1/coredns_1.8.1_linux_amd64.tgz
-    tar -xvf coredns_1.8.1_linux_amd64.tgz
+    wget https://github.com/coredns/coredns/releases/download/v1.8.1/coredns_1.8.1_linux_${COREDNS_ARCH}.tgz
+    tar -xvf coredns_1.8.1_linux_${COREDNS_ARCH}.tgz
     mv coredns build-cache/
 
     touch build-cache/coredns_1_8_1

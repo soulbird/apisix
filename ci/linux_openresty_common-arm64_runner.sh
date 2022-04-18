@@ -34,10 +34,7 @@ do_install() {
 
     ./utils/linux-install-luarocks.sh
 
-    wget https://github.com/etcd-io/etcd/releases/download/v3.4.18/etcd-v3.4.18-linux-arm64.tar.gz
-    tar xf etcd-v3.4.18-linux-arm64.tar.gz
-    sudo cp etcd-v3.4.18-linux-arm64/etcdctl /usr/local/bin/
-    rm -rf etcd-v3.4.18-linux-arm64
+    ./utils/linux-install-etcd-client.sh
 
     create_lua_deps
 
@@ -62,6 +59,8 @@ do_install() {
 script() {
     export_or_prefix
     openresty -V
+
+    ./utils/set-dns.sh
 
     # APISIX_ENABLE_LUACOV=1 PERL5LIB=.:$PERL5LIB prove -Itest-nginx/lib -r t
     FLUSH_ETCD=1 prove -Itest-nginx/lib -I./ -r $TEST_FILE_SUB_DIR | tee /tmp/test.result
