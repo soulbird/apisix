@@ -29,20 +29,6 @@ services:
       apisix_net:
 
 
-  ## keycloak
-  apisix_keycloak:
-    image: sshniro/keycloak-apisix:1.0.0
-    environment:
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: 123456
-    restart: unless-stopped
-    ports:
-      - "8090:8080"
-      - "8443:8443"
-    networks:
-      apisix_net:
-
-
   ## kafka-cluster
   zookeeper-server1:
     image: bitnami/zookeeper:3.6.0

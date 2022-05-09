@@ -24,6 +24,14 @@ before_install() {
     # launch deps env
     make ci-env-up
     ./ci/linux-ci-init-service.sh
+
+    mkdir -p docker-build
+    cd docker-build
+    wget https://github.com/keycloak/keycloak-containers/archive/refs/tags/18.0.0.tar.gz
+    tar -zxvf 18.0.0.tar.gz
+    cd keycloak-containers-18.0.0/server
+    sudo docker build -t  apisix/keycloak:arm64 .
+    sudo docker run -p 8080:8080 -p 8443:8443 -e KEYCLOAK_USER=admin -e KEYCLOAK_PASSWORD=123456 apisix/keycloak:arm64
 }
 
 do_install() {
@@ -61,6 +69,21 @@ script() {
     openresty -V
 
     ./utils/set-dns.sh
+
+    ./t/grpc_server_example/grpc_server_example \
+        -grpc-address :50051 -grpcs-address :50052 -grpcs-mtls-address :50053 \
+        -crt ./t/certs/apisix.crt -key ./t/certs/apisix.key -ca ./t/certs/mtls_ca.crt \
+        &
+    
+    # ensure grpc server example is already started
+    for (( i = 0; i <= 100; i++ )); do
+        if [[ "$i" -eq 100 ]]; then
+            echo "failed to start grpc_server_example in time"
+            exit 1
+        fi
+        nc -zv 127.0.0.1 50051 && break
+        sleep 1
+    done
 
     # APISIX_ENABLE_LUACOV=1 PERL5LIB=.:$PERL5LIB prove -Itest-nginx/lib -r t
     FLUSH_ETCD=1 prove -Itest-nginx/lib -I./ -r $TEST_FILE_SUB_DIR | tee /tmp/test.result

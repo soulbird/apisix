@@ -31,10 +31,10 @@ if [ -f "/etc/netplan/50-cloud-init.yaml" ]; then
     sudo pip3 install yq
 
     tmp=$(mktemp)
-    yq -y '.network.ethernets.eth0."dhcp4-overrides"."use-dns"=false' /etc/netplan/50-cloud-init.yaml | \
-    yq -y '.network.ethernets.eth0."dhcp4-overrides"."use-domains"=false' | \
-    yq -y '.network.ethernets.eth0.nameservers.addresses[0]="8.8.8.8"' | \
-    yq -y '.network.ethernets.eth0.nameservers.search[0]="apache.org"' > $tmp
+    yq -y '.network.ethernets.ens5."dhcp4-overrides"."use-dns"=false' /etc/netplan/50-cloud-init.yaml | \
+    yq -y '.network.ethernets.ens5."dhcp4-overrides"."use-domains"=false' | \
+    yq -y '.network.ethernets.ens5.nameservers.addresses[0]="8.8.8.8"' | \
+    yq -y '.network.ethernets.ens5.nameservers.search[0]="apache.org"' > $tmp
     mv $tmp /etc/netplan/50-cloud-init.yaml
     cat /etc/netplan/50-cloud-init.yaml
     sudo netplan apply
