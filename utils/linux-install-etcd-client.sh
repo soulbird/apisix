@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 #
 # Licensed to the Apache Software Foundation (ASF) under one or more
@@ -16,6 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+set -euo pipefail
 
 ETCD_ARCH="amd64"
 ARCH=${ARCH:-`(uname -m | tr '[:upper:]' '[:lower:]')`}
