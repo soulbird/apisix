@@ -69,8 +69,9 @@ workflows:
     jobs:
       - test:
           matrix:
-            parameters:
-              test_dir: ["t/debug", "t/xrpc"]
+              parameters:
+                os: [docker, linux, macos]
+                node-version: ["14.17.6", "16.9.0"]
         filters:
           branches:
             only: master
