@@ -70,9 +70,7 @@ workflows:
       - test:
           matrix:
             parameters:
-              test_dir:
-                - "t/debug"
-                - "t/xrpc"
+              test_dir: ["t/debug", "t/xrpc"]
         filters:
           branches:
             only: master
