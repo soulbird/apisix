@@ -65,19 +65,6 @@ services:
     networks:
       vault_net:
 
-
-  ## OpenLDAP
-  openldap:
-    image: bitnami/openldap:2.5.8
-    environment:
-      LDAP_ADMIN_USERNAME: amdin
-      LDAP_ADMIN_PASSWORD: adminpassword
-      LDAP_USERS: user01,user02
-      LDAP_PASSWORDS: password1,password2
-    ports:
-      - "1389:1389"
-      - "1636:1636"
-
 networks:
   apisix_net:
   consul_net:
