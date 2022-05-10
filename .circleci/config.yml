@@ -58,7 +58,7 @@ jobs:
       - run:
           name: Linux Install
           command: |
-            sudo -E ARCH=arm64 ./ci/linux_openresty_common_runner.sh do_install
+            sudo -E OPENRESTY_VERSION=source ARCH=arm64 ./ci/linux_openresty_common_runner.sh do_install
 
       - run:
           name: Linux Script
