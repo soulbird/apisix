@@ -334,6 +334,9 @@ install: runtime
 	$(ENV_INSTALL) -d $(ENV_INST_LUADIR)/apisix/plugins/slslog
 	$(ENV_INSTALL) apisix/plugins/slslog/*.lua $(ENV_INST_LUADIR)/apisix/plugins/slslog/
 
+	$(ENV_INSTALL) -d $(ENV_INST_LUADIR)/apisix/plugins/syslog
+	$(ENV_INSTALL) apisix/plugins/syslog/*.lua $(ENV_INST_LUADIR)/apisix/plugins/syslog/
+
 	$(ENV_INSTALL) -d $(ENV_INST_LUADIR)/apisix/plugins/zipkin
 	$(ENV_INSTALL) apisix/plugins/zipkin/*.lua $(ENV_INST_LUADIR)/apisix/plugins/zipkin/
 
@@ -351,6 +354,9 @@ install: runtime
 
 	$(ENV_INSTALL) -d $(ENV_INST_LUADIR)/apisix/stream/xrpc
 	$(ENV_INSTALL) apisix/stream/xrpc/*.lua $(ENV_INST_LUADIR)/apisix/stream/xrpc/
+
+	$(ENV_INSTALL) -d $(ENV_INST_LUADIR)/apisix/stream/xrpc/protocols/redis
+	$(ENV_INSTALL) apisix/stream/xrpc/protocols/redis/*.lua $(ENV_INST_LUADIR)/apisix/stream/xrpc/protocols/redis/
 
 	$(ENV_INSTALL) -d $(ENV_INST_LUADIR)/apisix/utils
 	$(ENV_INSTALL) apisix/utils/*.lua $(ENV_INST_LUADIR)/apisix/utils/
