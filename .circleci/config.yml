@@ -42,10 +42,9 @@ jobs:
             go build -o libxds.so -buildmode=c-shared main.go
 
       - run:
-          name: Build grpc server example
+          name: Linux Before install
           command: |
-            cd t/grpc_server_example
-            CGO_ENABLED=0 go build
+            sudo ./ci/linux_openresty_common_runner.sh before_install
 
       - run:
           name: Start Dubbo Backend
@@ -59,14 +58,14 @@ jobs:
       - run:
           name: Linux Install
           command: |
-            sudo ARCH=arm64 ./ci/linux_openresty_common-arm64_runner.sh do_install
+            sudo -E ARCH=arm64 ./ci/linux_openresty_common_runner.sh do_install
 
       - run:
           name: Linux Script
           environment:
             - TEST_FILE_SUB_DIR: << parameters.test_dir >>
           command: |
-            sudo -E ARCH=arm64 ./ci/linux_openresty_common-arm64_runner.sh script
+            sudo -E ARCH=arm64 ./ci/linux_openresty_common_runner.sh script
 
 workflows:
   test-apisx:
