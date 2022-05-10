@@ -24,6 +24,11 @@ before_install() {
     # launch deps env
     make ci-env-up
     ./ci/linux-ci-init-service.sh
+
+    cd t/grpc_server_example
+
+    CGO_ENABLED=0 go build
+    cd ../../
 }
 
 do_install() {
