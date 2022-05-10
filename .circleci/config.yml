@@ -33,7 +33,6 @@ jobs:
           command: |
             sudo apt-get update
             sudo apt install -y cpanminus build-essential libncurses5-dev libreadline-dev libssl-dev perl libpcre3 libpcre3-dev libldap2-dev
-            sudo cpanm --notest Test::Nginx
 
       - run:
           name: Build xDS library
@@ -44,7 +43,7 @@ jobs:
       - run:
           name: Linux Before install
           command: |
-            sudo -E env PATH=$PATH project_compose_ci=./ci/pod/docker-compose-arm64.yml ARCH=arm64 ./ci/linux_openresty_common_runner.sh before_install
+            sudo -E project_compose_ci=./ci/pod/docker-compose-arm64.yml ARCH=arm64 ./ci/linux_openresty_common_runner.sh before_install
 
       - run:
           name: Start Dubbo Backend
