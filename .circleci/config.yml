@@ -44,11 +44,6 @@ jobs:
             CGO_ENABLED=0 go build
 
       - run:
-          name: Linux Before install
-          command: |
-            sudo project_compose_ci=./ci/pod/docker-compose-arm64.yml ARCH=arm64 ./ci/linux_openresty_runner.sh before_install
-
-      - run:
           name: Start Dubbo Backend
           command: |
             sudo apt install -y maven
@@ -65,7 +60,7 @@ jobs:
       - run:
           name: Linux Script
           environment:
-            - TEST_FILE_SUB_DIR: "t/core/utils.t t/node/client-mtls.t"
+            - TEST_FILE_SUB_DIR: << parameters.test_dir >>
           command: |
             sudo -E ARCH=arm64 ./ci/linux_openresty_common-arm64_runner.sh script
 
@@ -73,6 +68,10 @@ workflows:
   test-apisx:
     jobs:
       - test:
+          matrix:
+            parameters:
+              test_dir: [t/admin t/cli t/config-center-yaml t/control t/core t/debug t/error_page t/misc,
+                         t/node t/router t/script t/stream-node t/utils t/xds-library t/xrpc]
         filters:
           branches:
             only: master
