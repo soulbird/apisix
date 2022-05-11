@@ -31,7 +31,7 @@ services:
 
   ## keycloak
   apisix_keycloak:
-    image: mihaibob/keycloak:18.0.0-legacy
+    image: mihaibob/keycloak:17.0.0-legacy
     environment:
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: 123456
