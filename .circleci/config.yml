@@ -93,4 +93,4 @@ workflows:
                   - "t/plugin/authz-keycloak.t t/plugin/authz-keycloak2.t t/plugin/authz-keycloak3.t"
           filters:
             branches:
-              only: feat/arm64ci_test
+              only: feat/arm64ci_core
