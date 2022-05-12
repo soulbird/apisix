@@ -65,14 +65,14 @@ jobs:
       - run:
           name: Start Dubbo Backend
           command: |
-            sudo apt install -y maven net-tools
-            netstat -lntp
+            sudo apt install -y maven
             cd t/lib/dubbo-backend
             mvn package
             cd dubbo-backend-provider/target
-            java -Djava.net.preferIPv4Stack=true -jar dubbo-demo-provider.one-jar.jar
-            sleep 3
-            netstat -lntp
+            java -Djava.net.preferIPv4Stack=true -jar dubbo-demo-provider.one-jar.jar > /tmp/java.log &
+            echo "wait 10s..."
+            sleep 10
+            cat /tmp/java.log
 
       - run:
           name: Linux Install
