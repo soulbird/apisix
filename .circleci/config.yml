@@ -90,7 +90,7 @@ workflows:
           matrix:
               parameters:
                 test_dir:
-                  - "t/plugin/limit-count-redis-cluster.t"
+                  - "t/plugin/limit-conn.t t/plugin/limit-conn2.t t/plugin/limit-count-redis-cluster.t"
           filters:
             branches:
               only: feat/arm64ci_core
