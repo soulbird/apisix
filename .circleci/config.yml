@@ -70,7 +70,7 @@ jobs:
             cd t/lib/dubbo-backend
             mvn package
             cd dubbo-backend-provider/target
-            java -Djava.net.preferIPv4Stack=true -jar dubbo-demo-provider.one-jar.jar > /tmp/java.log &
+            java -Djava.net.preferIPv4Stack=true -jar dubbo-demo-provider.one-jar.jar
             sleep 3
             netstat -lntp
 
