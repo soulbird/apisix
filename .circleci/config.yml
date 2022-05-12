@@ -65,11 +65,14 @@ jobs:
       - run:
           name: Start Dubbo Backend
           command: |
-            sudo apt install -y maven
+            sudo apt install -y maven net-tools
+            netstat -lntp
             cd t/lib/dubbo-backend
             mvn package
             cd dubbo-backend-provider/target
             java -Djava.net.preferIPv4Stack=true -jar dubbo-demo-provider.one-jar.jar > /tmp/java.log &
+            sleep 3
+            netstat -lntp
 
       - run:
           name: Linux Install
@@ -90,7 +93,7 @@ workflows:
           matrix:
               parameters:
                 test_dir:
-                  - "t/plugin/limit-conn.t t/plugin/limit-conn2.t t/plugin/limit-count-redis-cluster.t"
+                  - "t/plugin/limit-conn.t t/plugin/dubbo-proxy"
           filters:
             branches:
               only: feat/arm64ci_core
