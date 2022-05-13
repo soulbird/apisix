@@ -93,7 +93,7 @@ workflows:
           matrix:
               parameters:
                 test_dir:
-                  - "t/plugin/limit-conn.t t/plugin/dubbo-proxy t/plugin/grpc-web.t"
+                  - "t/plugin/limit-conn.t t/plugin/kafka-logger.t t/plugin/kafka-logger2.t"
           filters:
             branches:
               only: feat/arm64ci_core
