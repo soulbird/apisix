@@ -69,10 +69,10 @@ jobs:
             cd t/lib/dubbo-backend
             mvn package
             cd dubbo-backend-provider/target
-            java -Djava.net.preferIPv4Stack=true -jar dubbo-demo-provider.one-jar.jar > /tmp/java.log &
+            nohup java -Djava.net.preferIPv4Stack=true -jar dubbo-demo-provider.one-jar.jar &
             echo "wait 10s..."
             sleep 10
-            cat /tmp/java.log
+            cat nohup.out
 
       - run:
           name: Linux Install
@@ -93,7 +93,7 @@ workflows:
           matrix:
               parameters:
                 test_dir:
-                  - "t/plugin/limit-conn.t t/plugin/dubbo-proxy"
+                  - "t/plugin/limit-conn.t t/plugin/dubbo-proxy t/plugin/grpc-web.t"
           filters:
             branches:
               only: feat/arm64ci_core
