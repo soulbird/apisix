@@ -49,8 +49,7 @@ services:
     image: wurstmeister/kafka:2.13-2.8.1
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-server1:2181
-      ALLOW_PLAINTEXT_LISTENER: yes
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_LISTENERS: PLAINTEXT://:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://127.0.0.1:9092
     restart: unless-stopped
@@ -66,8 +65,7 @@ services:
     image: wurstmeister/kafka:2.13-2.8.1
     environment:
       KAFKA_ZOOKEEPER_CONNECT: zookeeper-server2:2181
-      ALLOW_PLAINTEXT_LISTENER: yes
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_LISTENERS: PLAINTEXT://:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://127.0.0.1:9092
     restart: unless-stopped
