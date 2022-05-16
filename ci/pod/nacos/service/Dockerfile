@@ -23,7 +23,7 @@ ENV SERVICE_NAME=${SERVICE_NAME:-gateway-service}
 ENV NAMESPACE=${NAMESPACE}
 ENV GROUP=${GROUP:-DEFAULT_GROUP}
 
-ADD https://raw.githubusercontent.com/api7/nacos-test-service/main/spring-nacos-1.0-SNAPSHOT.jar /app.jar
+ADD https://raw.githubusercontent.com/api7/nacos-test-service/change/openjdk18/spring-nacos-1.0-SNAPSHOT.jar /app.jar
 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar",\
             "--suffix.num=${SUFFIX_NUM}","--spring.cloud.nacos.discovery.server-addr=${NACOS_ADDR}",\
