@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-FROM java
+FROM openjdk:18-bullseye
 
 ENV SUFFIX_NUM=${SUFFIX_NUM:-1}
 ENV NACOS_ADDR=${NACOS_ADDR:-127.0.0.1:8848}
