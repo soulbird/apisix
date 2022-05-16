@@ -93,7 +93,7 @@ workflows:
           matrix:
               parameters:
                 test_dir:
-                  - "t/plugin/limit-conn.t t/plugin/skywalking.t t/plugin/kafka-logger.t t/plugin/kafka-logger2.t"
+                  - "t/plugin/limit-conn.t t/plugin/skywalking.t t/discovery/nacos.t t/discovery/nacos2.t"
           filters:
             branches:
               only: feat/arm64ci_core
