@@ -72,7 +72,7 @@ jobs:
         name: Load saved docker images
         run: |
           if [[ -f docker-images-buckup/apisix-images.tar ]]; then
-            echo "load saved images..."
+            echo "load saved images......"
             docker load --input docker-images-buckup/apisix-images.tar
           fi
 
