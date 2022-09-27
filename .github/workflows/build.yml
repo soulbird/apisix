@@ -2,22 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [master, 'release/**']
-    paths-ignore:
-      - 'docs/**'
-      - '**/*.md'
-  pull_request:
-    branches: [master, 'release/**']
-    paths-ignore:
-      - 'docs/**'
-      - '**/*.md'
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref == 'refs/heads/master' && github.run_number || github.ref }}
-  cancel-in-progress: true
-
-permissions:
-  contents: read
+    branches: ['refactor/ci_docker']
 
 jobs:
   build:
@@ -59,14 +44,6 @@ jobs:
           path: deps
           key: ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.os_name }}-${{ hashFiles('rockspec/apisix-master-0.rockspec') }}
 
-      - name: Extract branch name
-        if: ${{ startsWith(github.ref, 'refs/heads/release/') }}
-        id: branch_env
-        shell: bash
-        run: |
-          echo "##[set-output name=version;]$(echo ${GITHUB_REF##*/})"
-          echo "##[set-output name=fullname;]$(echo apache-apisix-${GITHUB_REF##*/}-src.tgz)"
-
       - name: Extract test type
         shell: bash
         id: test_env
@@ -82,20 +59,33 @@ jobs:
             echo "##[set-output name=type;]$(echo 'last')"
           fi
 
-      - name: Linux launch common services
-        run: |
-          make ci-env-up project_compose_ci=ci/pod/docker-compose.common.yml
+        - name: Cache deps
+          id: cache-images
+          uses: actions/cache@v3
+          env:
+            cache-name: cache-apisix-docker-images
+          with:
+            path: docker-images-buckup
+            key: ${{ runner.os }}-${{ env.cache-name }}-${{ matrix.os_name }}-${{ steps.test_env.outputs.type }}
 
-      - name: Create tarball
-        if: ${{ startsWith(github.ref, 'refs/heads/release/') }}
-        run: |
-          make compress-tar VERSION=${{ steps.branch_env.outputs.version }}
+        - if: ${{ steps.cache-images.outputs.cache-hit == 'true' }}
+          name: Load saved docker images
+          run: |
+            if [[ -f docker-images-buckup/apisix-images.tar ]]; then
+              echo "load saved images..."
+              docker load --input docker-images-buckup/apisix-images.tar
+            fi
 
-      - name: Remove source code
-        if: ${{ startsWith(github.ref, 'refs/heads/release/') }}
-        run: |
-          rm -rf $(ls -1 --ignore=*.tgz --ignore=ci --ignore=t --ignore=utils --ignore=.github)
-          tar zxvf ${{ steps.branch_env.outputs.fullname }}
+        - if: ${{ steps.cache-images.outputs.cache-hit != 'true' }}
+          name: Linux lanuch common services
+          run: |
+            make ci-env-up project_compose_ci=ci/pod/docker-compose.common.yml
+            mkdir docker-images-buckup
+            sum=` docker image list |wc -l`
+            COUNT=`expr $sum - 1`
+            TAG=`docker image list|grep -v REPOSITORY|awk '{print $1":" $2}'|awk 'ORS=NR%"'$COUNT'"?" ":"\n"{print}'`
+            echo tag: $TAG
+            docker save $TAG -o docker-images-buckup/apisix-images.tar
 
       - name: Start CI env (FIRST_TEST)
         if: steps.test_env.outputs.type == 'first'
