@@ -81,9 +81,9 @@ jobs:
         run: |
           make ci-env-up project_compose_ci=ci/pod/docker-compose.common.yml
           mkdir docker-images-buckup
-          sum=` docker image list |wc -l`
-          COUNT=`expr $sum - 1`
-          TAG=`docker image list|grep -v REPOSITORY|awk '{print $1":" $2}'|awk 'ORS=NR%"'$COUNT'"?" ":"\n"{print}'`
+          sum=` cat ci/pod/docker-compose.common.yml|grep image |wc -l`
+          #COUNT=`expr $sum - 1`
+          TAG=`cat ci/pod/docker-compose.common.yml|grep image|awk '{print $2}'|awk 'ORS=NR%"'$sum'"?" ":"\n"{print}'`
           echo tag: $TAG
           docker save $TAG -o docker-images-buckup/apisix-images.tar
 
